@@ -1,0 +1,35 @@
+version: '3'
+services:
+  tsunami-alert:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - .:/tsunami:cached
+    ports:
+      - 8001:80
+    command: /bin/sh -c "while sleep 1000; do :; done"
+    depends_on:
+      - db
+  
+  db:
+    image: mariadb
+    volumes:
+      - ./data:/var/lib/mysql
+    restart: always
+    environment:
+      MARIADB_ROOT_PASSWORD_FILE: /run/secrets/db_root_password
+    secrets:
+      - db_root_password
+
+  phpmyadmin:
+    image: phpmyadmin
+    restart: always
+    ports:
+      - 8002:80
+    environment:
+      - PMA-ARBITRARY=1
+
+secrets:
+  db_root_password:
+    file: db_root_password.txt

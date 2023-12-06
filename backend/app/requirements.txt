@@ -1,0 +1,8 @@
+fastapi
+uvicorn
+sqlmodel
+pymysql
+alembic
+python-multipart
+jose
+passlib
