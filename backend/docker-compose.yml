@@ -11,6 +11,7 @@ services:
     command: /bin/sh -c "while sleep 1000; do :; done"
     depends_on:
       - db
+    env_file: .devcontainer/devcontainer.env
   
   db:
     image: mariadb
